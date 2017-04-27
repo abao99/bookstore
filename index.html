@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+		<meta name="viewport" content="width-device , initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="./jquerymobile/jquery.mobile-1.4.5.min.css">
+		<script type="text/javascript" src="./jquerymobile/jquery-2.1.0.min.js"></script>
+		<script type="text/javascript" src="./jquerymobile/jquery.mobile-1.4.5.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="./css/mycss.css">
+</head>
+
+<script type="text/javascript">
+	var book_id = [];
+	book_id[0] =0;
+	function getinfo(mode){
+		
+		
+		$.get("get_book_info.php",{book_id: book_id[0], mode: mode},function(data){
+			book_id[0] = data[0].book_id;
+			if(book_id[0]==5){
+				$("#title_content").html("第"+data[0].book_id+"筆~"+"第"+data[1].book_id+"筆");
+				$("#bookimg2").attr("src",data[0].image_name);
+			$("#bookmsg2").html(data[0].description);
+			$("#bookimg1").attr("src",data[1].image_name);
+			$("#bookmsg1").html(data[1].description);
+			}
+			$("#title_content").html("第"+data[0].book_id+"筆~"+"第"+data[1].book_id+"筆");
+			$("#bookimg1").attr("src",data[0].image_name);
+			$("#bookmsg1").html(data[0].description);
+			$("#bookimg2").attr("src",data[1].image_name);
+			$("#bookmsg2").html(data[1].description);
+		},"json");
+	}
+</script>
+
+<body onload="javascript: getinfo('next')">
+	<div data-role="page" id="home">
+			<div data-role="header"  data-theme="b">
+				<h1>行動版網頁</h1>								
+			</div>
+			<div role="main" class="ui-content">
+				<div class="marginc">
+					<img  src="./img/m05.png" >
+				</div>
+				<a href="#popup_about" class="ui-btn" data-rel="popup" data-icon="comment" data-position-to="window"  >快樂出版社簡介</a>
+				<a href="#intro" class="ui-btn"  data-inline="true" data-mini="true">書籍介紹</a>
+			</div>
+
+			<div data-role="popup" id="popup_about">
+					<a href="#home" data-role="button" data-icon="delete" data-theme="a" data-iconpos="notext" class="ui-btn-right">Delete</a>
+					<div data-role="header"  data-theme="b">
+					
+					<h1>快樂出版社簡介</h1>
+					</div>
+					<font size="+2">
+						公司標語<br>
+						不斷超越，追求完美<br>
+					</font>
+				</div>
+			<div data-role="footer" data-position="fixed" data-theme="b">
+				<h1>快樂出版社</h1>
+			</div>
+		</div>
+
+		<div data-role="page" id="intro">
+			<div data-role="header"  data-theme="b">
+				<h1>書籍介紹</h1>								
+			</div>
+			<div role="main" class="ui-content">
+				<div id="title_content"></div>
+				<div class="ui-grid-a " >
+					<div class="ui-block-a ui-btn ">
+						<img  id="bookimg1"   >
+
+						<p id="bookmsg1"></p>
+					</div>
+					<div class="ui-block-b ui-btn ">
+						<img  id="bookimg2"  >
+
+						<p id="bookmsg2"></p>
+					</div>
+				</div>
+				
+			</div>
+			<div data-role="footer" data-position="fixed" data-theme="b">
+				<div data-role="navbar" data-iconpos="top">
+					<ul>
+						<li>
+							<a href="#home" data-role="button" data-icon="home">Home</a>
+						</li>
+						<li>
+							<a href="javascript: getinfo('prev')" data-role="button"  data-icon="search">上一個</a>
+						</li>
+						<li>
+							<a href="javascript: getinfo('next')" data-role="button" data-icon="search" >下一個</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+</body>
+</html>
